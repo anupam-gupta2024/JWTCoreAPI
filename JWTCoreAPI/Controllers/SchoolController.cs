@@ -26,7 +26,7 @@ namespace JWTCoreAPI.Controllers
 
         [Authorize]
         [HttpPost]
-        public string AddUser(Users user)
+        public string AddUser(Userlogin user)
         {
             return "User added with username " + user.Username;
         }
