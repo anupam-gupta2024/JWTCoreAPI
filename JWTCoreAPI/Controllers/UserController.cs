@@ -16,6 +16,19 @@ namespace JWTCoreAPI.Controllers
             return Ok("Hi, you're on public property");
         }
 
+        [HttpGet("GetIP")]
+        public IActionResult GetIP()
+        {
+            return Ok(new { IP = HttpContext.Connection.RemoteIpAddress.ToString() });
+        }
+
+        [HttpGet("GetAllUser")]
+        [Authorize(Roles = "Developer")]
+        public IActionResult GetAllUser()
+        {
+            return Ok(UserConstants.Users);
+        }
+
 
         [HttpGet("Admin")]
         [Authorize(Roles = "Developer")]
@@ -33,6 +46,13 @@ namespace JWTCoreAPI.Controllers
             var currentuser = GetCurrentUser();
 
             return Ok($"Hi {currentuser.GivenName}, you are an {currentuser.Role}.");
+        }
+
+        [HttpGet("GetUserData")]
+        [Authorize(Roles = "Developer, Operator")]
+        public IActionResult GetUserData()
+        {
+            return Ok(GetCurrentUser());
         }
 
         private UserModel GetCurrentUser()
