@@ -22,6 +22,15 @@ namespace JWTCoreAPI.Controllers
             _config = configuration;
         }
 
+        [HttpGet]
+        [Route("getData")]
+        public Dictionary<string, string?> getData()
+        {
+            return _config.GetSection("ConnectionStrings")
+                .GetChildren()
+                .ToDictionary(a => a.Key, a => a.Value);
+        }
+
         private UserModel AuthenticateUser(Userlogin userLogin)
         {
             var currentUser = UserConstants.Users.FirstOrDefault(o => o.Username.ToLower() == userLogin.Username.ToLower() && o.Password == userLogin.Password);
@@ -200,7 +209,7 @@ namespace JWTCoreAPI.Controllers
         [HttpDelete]
         public IActionResult RevokeRefreshToken(string username)
         {
-            if(_refreshToken.TryRemove(username, out _))
+            if (_refreshToken.TryRemove(username, out _))
                 return NoContent();
 
             return BadRequest("User doesn't exist.");

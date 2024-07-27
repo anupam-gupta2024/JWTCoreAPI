@@ -60,8 +60,13 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI();    
 }
+
+//app.Run(async (context) =>
+//{
+//    await context.Response.WriteAsync($"Environment Name : - {app.Environment.EnvironmentName}");
+//});
 
 app.UseHttpsRedirection();
 
